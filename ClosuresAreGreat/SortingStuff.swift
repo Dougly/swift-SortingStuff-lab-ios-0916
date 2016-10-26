@@ -18,8 +18,52 @@ struct ToyBin {
     
     // TODO: Implement all of the sort functions (lets organize this toy bin!)
     
- 
+    mutating func sortShips () {
+        ships = ships.sorted { firstShip, SecondShip in
+            return firstShip.age > SecondShip.age
+        }
+        
+        for (index, ship) in ships.enumerated() {
+            if ship.name == "Titanic" {
+                ships.remove(at: index)
+                ships.insert(ship, at: 0)
+                break
+            }
+        }
+        dump(ships)
+    }
+    
+    mutating func sortBooks () {
+        books = books.sorted { return $0.name < $1.name }
+        dump(books)
+    }
+    
+    mutating func sortBowlingPins () {
+        bowlingPins = bowlingPins.sorted { return $0.color.rawValue < $1.color.rawValue }
+        dump(bowlingPins)
+    }
+    
+    mutating func sortMusicCDs () {
+        musicCDs = musicCDs.sorted { $0.name < $1.name }
+        
+        for (index, cd) in musicCDs.enumerated() {
+            if cd.name == "Drake" {
+                musicCDs.remove(at: index)
+                musicCDs.insert(cd, at: 0)
+            }
+        }
+    }
+    
+    mutating func changeColorOfAllPins(to color: Color) {
+        bowlingPins = bowlingPins.map { pin -> BowlingPin in
+            var newPin = pin
+            newPin.changeColor(to: color)
+            return newPin
+        }
+    }
 }
+
+
 
 
 struct Ship {
@@ -39,6 +83,11 @@ struct BowlingPin {
     var name: String
     var film: String
     var color: Color
+    
+    mutating func changeColor(to color:Color) {
+        self.color = color
+    }
+    
 }
 
 
